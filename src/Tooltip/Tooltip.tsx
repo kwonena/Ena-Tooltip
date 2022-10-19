@@ -4,7 +4,6 @@ import styled from "styled-components";
 interface TooltipProps {
   children: React.ReactElement;
   message: string;
-  target: any;
   position: PositionType;
   trigger: TriggerType;
 }
@@ -12,14 +11,8 @@ interface TooltipProps {
 type PositionType = "top" | "bottom" | "left" | "right";
 type TriggerType = "hover" | "click";
 
-const Tooltip = ({
-  message,
-  target,
-  position,
-  trigger,
-  children,
-}: TooltipProps) => {
-  const targetRef = useRef<any>(null);
+const Tooltip = ({ message, position, trigger, children }: TooltipProps) => {
+  const targetRef = useRef<HTMLDivElement | null>(null);
 
   const [clicked, setClicked] = useState<boolean>(false);
   const [hovered, setHovered] = useState<boolean>(false);
@@ -99,7 +92,7 @@ const TooltipMessage = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #b5b5b5;
-  color: #282828;
+  background: #0000004b;
+  color: #ffffff;
   border-radius: 6px;
 `;
