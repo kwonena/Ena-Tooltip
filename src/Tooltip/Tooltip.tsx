@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
-interface TooltipProps {
+export interface TooltipProps {
   children: React.ReactElement;
   message: string;
   position: PositionType;
