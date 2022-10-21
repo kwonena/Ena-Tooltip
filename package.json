@@ -1,7 +1,22 @@
 {
-  "name": "tem",
-  "version": "0.1.0",
-  "private": true,
+  "name": "ena-tooltip",
+  "version": "0.2.0",
+  "private": false,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "browser": "./browser/specific/main.js",
+  "description": "React component library that can be adjusted according to position and trigger",
+  "keywords": [
+    "react",
+    "component",
+    "typescript",
+    "tooltip",
+    "popover"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kwonena/Tooltip.git"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -24,6 +39,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "prepare": "rm -rf dist && mkdir dist && tsc",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
   },

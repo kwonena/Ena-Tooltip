@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import Tooltip, { TooltipProps } from "./Tooltip";
+import Tooltip, { TooltipProps } from "./index";
 import styled from "styled-components";
 
 export default {

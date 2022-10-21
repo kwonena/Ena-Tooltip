@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { Children, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 export interface TooltipProps {
@@ -43,12 +43,11 @@ const Tooltip = ({ message, position, trigger, children }: TooltipProps) => {
   return (
     <>
       <TooltipContainer
-        ref={targetRef}
         onClick={onClickTarget}
         onMouseOver={onHoverTarget}
         onMouseLeave={() => setHovered(false)}
       >
-        {children}
+        <div ref={targetRef}>{children}</div>
         {(clicked || hovered) && (
           <TooltipMessage className={position}>{message}</TooltipMessage>
         )}
@@ -66,22 +65,18 @@ const TooltipContainer = styled.div`
   .top {
     bottom: 100%;
     left: 0%;
-    margin-bottom: 8px;
   }
   .bottom {
     top: 100%;
     left: 0%;
-    margin-top: 8px;
   }
   .left {
     top: 0%;
     right: 100%;
-    margin-right: 8px;
   }
   .right {
     top: 0%;
     left: 100%;
-    margin-left: 8px;
   }
 `;
 
