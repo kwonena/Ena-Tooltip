@@ -1,4 +1,4 @@
-import React, { Children, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 export interface TooltipProps {
@@ -22,6 +22,7 @@ const Tooltip = ({ message, position, trigger, children }: TooltipProps) => {
     return () => {
       document.removeEventListener("mousedown", onClickOutside);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clicked, hovered]);
 
   // target, message 이 외에 외부 클릭 감지 message 비활성화
@@ -62,6 +63,9 @@ const TooltipContainer = styled.div`
   position: relative;
   width: fit-content;
   height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   .top {
     bottom: 100%;
     left: 0%;
