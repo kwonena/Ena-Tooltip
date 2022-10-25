@@ -12,10 +12,16 @@ type PositionType = "top" | "bottom" | "left" | "right";
 type TriggerType = "hover" | "click";
 
 const Tooltip = ({ message, position, trigger, children }: TooltipProps) => {
-  const targetRef = useRef<HTMLDivElement | null>(null);
+  // <HTMLDivElement | null>로 타입을 결정할 경우 offsetHeight에서 에러 발생
+  const targetRef = useRef<any>(null);
 
   const [clicked, setClicked] = useState<boolean>(false);
   const [hovered, setHovered] = useState<boolean>(false);
+
+  const targetHeight: any = targetRef.current?.offsetHeight; // margin을 포함한 target의 높이
+  const childrenHeight: any = targetRef.current?.children[0].offsetHeight; // margin을 제외한 target의 높이
+  const marginWithoutChildrenHeight = (targetHeight - childrenHeight) / 2; // children에 적용된 margin값
+  const padding: number = 10; // message와 children 사이 여유 공간
 
   useEffect(() => {
     document.addEventListener("mousedown", onClickOutside);
@@ -44,11 +50,14 @@ const Tooltip = ({ message, position, trigger, children }: TooltipProps) => {
   return (
     <>
       <TooltipContainer
+        margin={marginWithoutChildrenHeight}
+        padding={padding}
+        ref={targetRef}
         onClick={onClickTarget}
         onMouseOver={onHoverTarget}
         onMouseLeave={() => setHovered(false)}
       >
-        <div ref={targetRef}>{children}</div>
+        {children}
         {(clicked || hovered) && (
           <TooltipMessage className={position}>{message}</TooltipMessage>
         )}
@@ -59,39 +68,46 @@ const Tooltip = ({ message, position, trigger, children }: TooltipProps) => {
 
 export default Tooltip;
 
-const TooltipContainer = styled.div`
+const TooltipContainer = styled.div<{ margin: number; padding: number }>`
   position: relative;
   width: fit-content;
   height: fit-content;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   .top {
     bottom: 100%;
-    left: 0%;
   }
   .bottom {
     top: 100%;
-    left: 0%;
   }
   .left {
-    top: 0%;
     right: 100%;
   }
   .right {
-    top: 0%;
     left: 100%;
+  }
+  .top,
+  .bottom {
+    left: 0%;
+    margin: ${(props) =>
+      props.margin &&
+      `${-props.margin + props.padding}px ${props.margin / 2}px`};
+  }
+  .left,
+  .right {
+    top: 0%;
+    margin: ${(props) =>
+      props.margin && `${props.margin}px ${-props.margin + props.padding}px`};
   }
 `;
 
 const TooltipMessage = styled.div`
   position: absolute;
-  width: 200px;
-  height: 50px;
+  width: 180px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #0000004b;
+  padding: 0 30px;
+  background: #646464;
   color: #ffffff;
   border-radius: 6px;
 `;

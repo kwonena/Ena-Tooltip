@@ -26,6 +26,7 @@ var Tooltip = function (_a) {
         return function () {
             document.removeEventListener("mousedown", onClickOutside);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [clicked, hovered]);
     // target, message 이 외에 외부 클릭 감지 message 비활성화
     var onClickOutside = function (e) {
@@ -46,6 +47,6 @@ var Tooltip = function (_a) {
     return (_jsx(_Fragment, { children: _jsxs(TooltipContainer, __assign({ onClick: onClickTarget, onMouseOver: onHoverTarget, onMouseLeave: function () { return setHovered(false); } }, { children: [_jsx("div", __assign({ ref: targetRef }, { children: children })), (clicked || hovered) && (_jsx(TooltipMessage, __assign({ className: position }, { children: message })))] })) }));
 };
 export default Tooltip;
-var TooltipContainer = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  width: fit-content;\n  height: fit-content;\n  .top {\n    bottom: 100%;\n    left: 0%;\n    margin-bottom: 8px;\n  }\n  .bottom {\n    top: 100%;\n    left: 0%;\n    margin-top: 8px;\n  }\n  .left {\n    top: 0%;\n    right: 100%;\n    margin-right: 8px;\n  }\n  .right {\n    top: 0%;\n    left: 100%;\n    margin-left: 8px;\n  }\n"], ["\n  position: relative;\n  width: fit-content;\n  height: fit-content;\n  .top {\n    bottom: 100%;\n    left: 0%;\n    margin-bottom: 8px;\n  }\n  .bottom {\n    top: 100%;\n    left: 0%;\n    margin-top: 8px;\n  }\n  .left {\n    top: 0%;\n    right: 100%;\n    margin-right: 8px;\n  }\n  .right {\n    top: 0%;\n    left: 100%;\n    margin-left: 8px;\n  }\n"])));
+var TooltipContainer = styled.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: relative;\n  width: fit-content;\n  height: fit-content;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  .top {\n    bottom: 100%;\n    left: 0%;\n  }\n  .bottom {\n    top: 100%;\n    left: 0%;\n  }\n  .left {\n    top: 0%;\n    right: 100%;\n  }\n  .right {\n    top: 0%;\n    left: 100%;\n  }\n"], ["\n  position: relative;\n  width: fit-content;\n  height: fit-content;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  .top {\n    bottom: 100%;\n    left: 0%;\n  }\n  .bottom {\n    top: 100%;\n    left: 0%;\n  }\n  .left {\n    top: 0%;\n    right: 100%;\n  }\n  .right {\n    top: 0%;\n    left: 100%;\n  }\n"])));
 var TooltipMessage = styled.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  position: absolute;\n  width: 200px;\n  height: 50px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background: #0000004b;\n  color: #ffffff;\n  border-radius: 6px;\n"], ["\n  position: absolute;\n  width: 200px;\n  height: 50px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background: #0000004b;\n  color: #ffffff;\n  border-radius: 6px;\n"])));
 var templateObject_1, templateObject_2;
