@@ -18,9 +18,10 @@ const Tooltip = ({ message, position, trigger, children }: TooltipProps) => {
   const [clicked, setClicked] = useState<boolean>(false);
   const [hovered, setHovered] = useState<boolean>(false);
 
-  const targetHeight: any = targetRef.current?.offsetHeight; // margin을 포함한 target의 높이
-  const childrenHeight: any = targetRef.current?.children[0].offsetHeight; // margin을 제외한 target의 높이
-  const marginWithoutChildrenHeight = (targetHeight - childrenHeight) / 2; // children에 적용된 margin값
+  const targetHeight: number = targetRef.current?.offsetHeight; // margin을 포함한 target의 높이
+  const childrenHeight: number = targetRef.current?.children[0].offsetHeight; // margin을 제외한 target의 높이
+  const marginWithoutChildrenHeight: number =
+    (targetHeight - childrenHeight) / 2; // children에 적용된 margin값
   const padding: number = 10; // message와 children 사이 여유 공간
 
   useEffect(() => {
@@ -37,12 +38,12 @@ const Tooltip = ({ message, position, trigger, children }: TooltipProps) => {
       setClicked(false);
   };
 
-  const onClickTarget = (e: any) => {
+  const onClickTarget = () => {
     if (trigger !== "click") return;
     setClicked(true);
   };
 
-  const onHoverTarget = (e: any) => {
+  const onHoverTarget = () => {
     if (trigger !== "hover") return;
     setHovered(true);
   };
