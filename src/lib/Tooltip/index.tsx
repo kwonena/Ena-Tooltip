@@ -29,7 +29,6 @@ const Tooltip = ({ message, position, trigger, children }: TooltipProps) => {
     return () => {
       document.removeEventListener("mousedown", onClickOutside);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clicked, hovered]);
 
   // target, message 이 외에 외부 클릭 감지 message 비활성화
