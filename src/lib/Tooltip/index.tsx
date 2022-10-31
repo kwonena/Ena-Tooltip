@@ -12,8 +12,7 @@ type PositionType = "top" | "bottom" | "left" | "right";
 type TriggerType = "hover" | "click";
 
 const Tooltip = ({ message, position, trigger, children }: TooltipProps) => {
-  // <HTMLDivElement | null>로 타입을 결정할 경우 offsetHeight에서 에러 발생
-  const targetRef = useRef<any>(null);
+  const targetRef = useRef<HTMLDivElement | any>(null);
 
   const [clicked, setClicked] = useState<boolean>(false);
   const [hovered, setHovered] = useState<boolean>(false);
@@ -32,8 +31,8 @@ const Tooltip = ({ message, position, trigger, children }: TooltipProps) => {
   }, [clicked, hovered]);
 
   // target, message 이 외에 외부 클릭 감지 message 비활성화
-  const onClickOutside = (e: MouseEvent) => {
-    if (clicked && !targetRef?.current?.contains(e.target as Node))
+  const onClickOutside = (event: MouseEvent) => {
+    if (clicked && !targetRef?.current?.contains(event.target as Node))
       setClicked(false);
   };
 
@@ -48,21 +47,19 @@ const Tooltip = ({ message, position, trigger, children }: TooltipProps) => {
   };
 
   return (
-    <>
-      <TooltipContainer
-        margin={marginWithoutChildrenHeight}
-        padding={padding}
-        ref={targetRef}
-        onClick={onClickTarget}
-        onMouseOver={onHoverTarget}
-        onMouseLeave={() => setHovered(false)}
-      >
-        {children}
-        {(clicked || hovered) && (
-          <TooltipMessage className={position}>{message}</TooltipMessage>
-        )}
-      </TooltipContainer>
-    </>
+    <TooltipContainer
+      margin={marginWithoutChildrenHeight}
+      padding={padding}
+      ref={targetRef}
+      onClick={onClickTarget}
+      onMouseOver={onHoverTarget}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {children}
+      {(clicked || hovered) && (
+        <TooltipMessage className={position}>{message}</TooltipMessage>
+      )}
+    </TooltipContainer>
   );
 };
 
