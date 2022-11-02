@@ -1,34 +1,42 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
-export interface TooltipProps {
+export type TooltipTypes = {
   children: React.ReactElement;
   message: string;
   position: PositionType;
   trigger: TriggerType;
-}
+} & React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+>;
 
 type PositionType = "top" | "bottom" | "left" | "right";
 type TriggerType = "hover" | "click";
 
-const Tooltip = ({ message, position, trigger, children }: TooltipProps) => {
-  const targetRef = useRef<HTMLDivElement | any>(null);
+const Tooltip = ({ message, position, trigger, children }: TooltipTypes) => {
+  const targetRef = useRef<HTMLDivElement | null>(null);
+  const childrenRef = useRef<HTMLDivElement | null>(null);
 
+  const [childrenMargin, setChildrenMargin] = useState<number>(0);
   const [clicked, setClicked] = useState<boolean>(false);
   const [hovered, setHovered] = useState<boolean>(false);
 
-  const targetHeight: number = targetRef.current?.offsetHeight; // margin을 포함한 target의 높이
-  const childrenHeight: number = targetRef.current?.children[0].offsetHeight; // margin을 제외한 target의 높이
-  const marginWithoutChildrenHeight: number =
-    (targetHeight - childrenHeight) / 2; // children에 적용된 margin값
   const padding: number = 10; // message와 children 사이 여유 공간
+
+  useEffect(() => {
+    if (!targetRef.current || !childrenRef.current) return;
+    const targetHeight: number = targetRef.current?.offsetHeight;
+    const childrenHeight: number = childrenRef.current?.offsetHeight;
+    setChildrenMargin((targetHeight - childrenHeight) / 2 || 0);
+  }, []);
 
   useEffect(() => {
     document.addEventListener("mousedown", onClickOutside);
     return () => {
       document.removeEventListener("mousedown", onClickOutside);
     };
-  }, [clicked, hovered]);
+  }, [clicked]);
 
   // target, message 이 외에 외부 클릭 감지 message 비활성화
   const onClickOutside = (event: MouseEvent) => {
@@ -48,14 +56,14 @@ const Tooltip = ({ message, position, trigger, children }: TooltipProps) => {
 
   return (
     <TooltipContainer
-      margin={marginWithoutChildrenHeight}
-      padding={padding}
       ref={targetRef}
+      margin={childrenMargin}
+      padding={padding}
       onClick={onClickTarget}
       onMouseOver={onHoverTarget}
       onMouseLeave={() => setHovered(false)}
     >
-      {children}
+      {React.cloneElement(children && children, { ref: childrenRef })}
       {(clicked || hovered) && (
         <TooltipMessage className={position}>{message}</TooltipMessage>
       )}

@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import Tooltip, { TooltipProps } from "./index";
+import Tooltip, { TooltipTypes } from "./index";
 import styled from "styled-components";
 
 export default {
@@ -13,7 +13,7 @@ export default {
 } as ComponentMeta<typeof Tooltip>;
 
 // 기본 format
-const Template: ComponentStory<typeof Tooltip> = (args: TooltipProps) => {
+const Template: ComponentStory<typeof Tooltip> = (args: TooltipTypes) => {
   return (
     <StorybookContainer>
       <Tooltip {...args}>
